@@ -21,6 +21,7 @@
 #ifndef _XOS_MT_MUTEX_HPP
 #define _XOS_MT_MUTEX_HPP
 
+#include "xos/base/logged.hpp"
 #include "xos/base/locked.hpp"
 #include "xos/base/created.hpp"
 #include "xos/io/logger.hpp"
@@ -28,7 +29,7 @@
 namespace xos {
 namespace mt {
 
-typedef locked mutext_implements;
+typedef loggedt<locked> mutext_implements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: mutext
 ///////////////////////////////////////////////////////////////////////
@@ -38,19 +39,13 @@ template
 class _EXPORT_CLASS mutext: virtual public TImplements {
 public:
     typedef TImplements implements;
-    virtual bool is_logged() const {
-        return true;
-    }
-    virtual bool is_err_logged() const {
-        return true;
-    }
 };
 typedef mutext<> mutex;
 
 namespace extended {
 
 typedef mt::mutex mutext_implements;
-typedef base mutext_extends;
+typedef xos::extended::loggedt<mt::mutext_implements, base> mutext_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: mutext
 ///////////////////////////////////////////////////////////////////////
@@ -72,20 +67,22 @@ public:
     enum { unattached = VUnattached };
     
     mutext(attached_t detached, bool is_created)
-    : extends(detached, is_created), is_logged_(true), is_err_logged_(true) {
+    : extends(detached, is_created) {
     }
-    mutext(attached_t detached)
-    : extends(detached), is_logged_(true), is_err_logged_(true) {
+    mutext(attached_t detached): extends(detached) {
     }
-    mutext(bool is_logged, bool is_err_logged)
-    : is_logged_(is_logged), is_err_logged_(is_err_logged) {
+    mutext(bool is_logged, bool is_err_logged) {
+        this->set_is_logged(is_logged);
+        this->set_is_err_logged(is_err_logged);
     }
-    mutext(bool is_logged): is_logged_(is_logged), is_err_logged_(true) {
+    mutext(bool is_logged) {
+        this->set_is_logged(is_logged);
     }
-    mutext(const mutext &copy)
-    : extends(copy), is_logged_(copy.is_logged()), is_err_logged_(copy.is_err_logged()) {
+    mutext(const mutext &copy): extends(copy) {
+        this->set_is_logged(copy.is_logged());
+        this->set_is_err_logged(copy.is_err_logged());
     }
-    mutext(): is_logged_(true), is_err_logged_(true) {
+    mutext() {
     }
     virtual ~mutext() {
         IF_ERR_LOGGED_DEBUG(this->is_logged(), this->is_err_logged(), "this->destroyed()...");
@@ -96,16 +93,6 @@ public:
         }
     }
 
-protected:
-    virtual bool is_logged() const {
-        return is_logged_;
-    }
-    virtual bool is_err_logged() const {
-        return is_err_logged_;
-    }
-
-protected:
-    bool is_logged_, is_err_logged_;
 };
 typedef mutext<> mutex;
 
