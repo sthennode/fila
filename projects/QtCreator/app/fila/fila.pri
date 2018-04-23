@@ -53,6 +53,10 @@ $${fila_DEFINES} \
 # fila_exe HEADERS
 #
 fila_exe_HEADERS += \
+$${NADIR_SRC}/xos/base/logged.hpp \
+$${NADIR_SRC}/xos/base/locked.hpp \
+$${NADIR_SRC}/xos/base/acquired.hpp \
+$${NADIR_SRC}/xos/base/waited.hpp \
 $${FILA_SRC}/xos/mt/os/os.hpp \
 $${FILA_SRC}/xos/mt/mutex.hpp \
 $${FILA_SRC}/xos/mt/posix/mutex.hpp \
@@ -61,6 +65,10 @@ $${FILA_SRC}/xos/console/main_main.hpp \
 # fila_exe SOURCES
 #
 fila_exe_SOURCES += \
+$${NADIR_SRC}/xos/base/logged.cpp \
+$${NADIR_SRC}/xos/base/locked.cpp \
+$${NADIR_SRC}/xos/base/acquired.cpp \
+$${NADIR_SRC}/xos/base/waited.cpp \
 $${FILA_SRC}/xos/mt/os/os.cpp \
 $${FILA_SRC}/xos/mt/posix/mutex.cpp \
 $${FILA_SRC}/xos/console/main_main.cpp \
