@@ -21,42 +21,25 @@
 #ifndef _XOS_MT_OS_SEMAPHORE_HPP
 #define _XOS_MT_OS_SEMAPHORE_HPP
 
-#include "xos/base/semaphore.hpp"
+#include "xos/mt/os/os.hpp"
+
+#if defined(WINDOWS)
+#include "xos/mt/microsoft/windows/semaphore.hpp"
+#elif defined(MACOSX)
+#include "xos/mt/apple/osx/semaphore.hpp"
+#elif defined(APPIOS)
+#include "xos/mt/apple/ios/semaphore.hpp"
+#elif defined(LINUX)
+#include "xos/mt/linux/semaphore.hpp"
+#else /// defined(WINDOWS)
+#include "xos/mt/posix/semaphore.hpp"
+#endif /// defined(WINDOWS)
 
 namespace xos {
 namespace mt {
 namespace os {
 
-typedef semaphore semaphoret_implements;
-///////////////////////////////////////////////////////////////////////
-///  Class: semaphoret
-///////////////////////////////////////////////////////////////////////
-template <class TImplements = semaphoret_implements>
-class _EXPORT_CLASS semaphoret: virtual public TImplements {
-public:
-    typedef TImplements implements;
-};
-typedef semaphoret<> semaphore;
-
-typedef semaphore semaphoret_implements;
-typedef semaphore_extend semaphoret_extends;
-///////////////////////////////////////////////////////////////////////
-///  Class: semaphoret
-///////////////////////////////////////////////////////////////////////
-template <class TImplements = semaphoret_implements, class TExtends = semaphoret_extends>
-class _EXPORT_CLASS semaphoret: virtual public TImplements, public TExtends {
-public:
-    typedef TImplements implements;
-    typedef TExtends extends;
-
-    semaphoret(const semaphoret &copy) {
-    }
-    semaphoret() {
-    }
-    virtual ~semaphoret() {
-    }
-};
-typedef semaphoret<> semaphore;
+typedef os::semaphore semaphore;
 
 } /// namespace os
 } /// namespace mt

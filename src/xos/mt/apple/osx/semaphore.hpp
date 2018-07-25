@@ -21,43 +21,14 @@
 #ifndef _XOS_MT_APPLE_OSX_SEMAPHORE_HPP
 #define _XOS_MT_APPLE_OSX_SEMAPHORE_HPP
 
-#include "xos/base/semaphore.hpp"
+#include "xos/mt/apple/mach/semaphore.hpp"
 
 namespace xos {
 namespace mt {
 namespace apple {
 namespace osx {
 
-typedef semaphore semaphoret_implements;
-///////////////////////////////////////////////////////////////////////
-///  Class: semaphoret
-///////////////////////////////////////////////////////////////////////
-template <class TImplements = semaphoret_implements>
-class _EXPORT_CLASS semaphoret: virtual public TImplements {
-public:
-    typedef TImplements implements;
-};
-typedef semaphoret<> semaphore;
-
-typedef semaphore semaphoret_implements;
-typedef semaphore_extend semaphoret_extends;
-///////////////////////////////////////////////////////////////////////
-///  Class: semaphoret
-///////////////////////////////////////////////////////////////////////
-template <class TImplements = semaphoret_implements, class TExtends = semaphoret_extends>
-class _EXPORT_CLASS semaphoret: virtual public TImplements, public TExtends {
-public:
-    typedef TImplements implements;
-    typedef TExtends extends;
-
-    semaphoret(const semaphoret &copy) {
-    }
-    semaphoret() {
-    }
-    virtual ~semaphoret() {
-    }
-};
-typedef semaphoret<> semaphore;
+typedef mach::semaphore semaphore;
 
 } /// namespace osx
 } /// namespace apple

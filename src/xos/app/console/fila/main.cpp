@@ -13,18 +13,22 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: semaphore.cpp
+///   File: main.cpp
 ///
 /// Author: $author$
-///   Date: 4/11/2018
+///   Date: 7/14/2018
 ///////////////////////////////////////////////////////////////////////
-#include "xos/mt/semaphore.hpp"
+#include "xos/app/console/fila/main.hpp"
 
 namespace xos {
-namespace mt {
+namespace app {
+namespace console {
+namespace fila {
 
-} /// namespace mt
+static main the_main;
+
+} /// namespace fila
+} /// namespace console
+} /// namespace app
 } /// namespace xos
-
-        
 

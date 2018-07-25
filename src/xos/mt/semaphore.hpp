@@ -21,24 +21,83 @@
 #ifndef _XOS_MT_SEMAPHORE_HPP
 #define _XOS_MT_SEMAPHORE_HPP
 
-#include "xos/base/semaphore.hpp"
+#include "xos/base/logged.hpp"
+#include "xos/base/acquired.hpp"
+#include "xos/base/created.hpp"
+#include "xos/io/logger.hpp"
 
 namespace xos {
 namespace mt {
 
-typedef semaphore semaphoret_implements;
+typedef loggedt<acquired> semaphoret_implements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: semaphoret
 ///////////////////////////////////////////////////////////////////////
-template <class TImplements = semaphoret_implements>
+template 
+<class TImplement = semaphoret_implements, 
+ class TImplements = creatort<TImplement> >
 class _EXPORT_CLASS semaphoret: virtual public TImplements {
 public:
     typedef TImplements implements;
 };
 typedef semaphoret<> semaphore;
 
-typedef semaphore semaphoret_implements;
-typedef semaphore_extend semaphoret_extends;
+namespace extended {
+typedef mt::semaphore semaphoret_implements;
+typedef xos::extended::loggedt<mt::semaphoret_implements, base> semaphoret_extends;
+///////////////////////////////////////////////////////////////////////
+///  Class: semaphoret
+///////////////////////////////////////////////////////////////////////
+template 
+<typename TAttachedTo = pointer_t, 
+ typename TUnattached = int, TUnattached VUnattached = 0,
+ class TImplement = semaphoret_implements,  class TExtend = semaphoret_extends,
+ class TAttacher = attachert<TAttachedTo, TUnattached, VUnattached, TImplement>,
+ class TAttached = attachedt<TAttachedTo, TUnattached, VUnattached, TAttacher, TExtend>,
+ class TCreated = createdt<TAttachedTo, TUnattached, VUnattached, TAttacher, TAttached>,
+ class TImplements = TAttacher, class TExtends = TCreated>
+class _EXPORT_CLASS semaphoret: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements implements;
+    typedef TExtends extends;
+
+    typedef TAttachedTo attached_t;
+    typedef TUnattached unattached_t;
+    enum { unattached = VUnattached };
+    
+    semaphoret(attached_t detached, bool is_created)
+    : extends(detached, is_created) {
+    }
+    semaphoret(attached_t detached): extends(detached) {
+    }
+    semaphoret(bool is_logged, bool is_err_logged) {
+        this->set_is_logged(is_logged);
+        this->set_is_err_logged(is_err_logged);
+    }
+    semaphoret(bool is_logged) {
+        this->set_is_logged(is_logged);
+    }
+    semaphoret(const semaphoret &copy): extends(copy) {
+        this->set_is_logged(copy.is_logged());
+        this->set_is_err_logged(copy.is_err_logged());
+    }
+    semaphoret() {
+    }
+    virtual ~semaphoret() {
+        IS_ERR_LOGGED_DEBUG("this->destroyed()...");
+        if (!(this->destroyed())) {
+            IS_ERR_LOGGED_ERROR("...failed on this->destroyed() throw (create_exception(destroy_failed))...");
+            throw (create_exception(destroy_failed));
+        }
+    }
+
+};
+typedef semaphoret<> semaphore;
+} /// namespace extended
+
+namespace derived {
+typedef mt::semaphore semaphoret_implements;
+typedef mt::extended::semaphore semaphoret_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: semaphoret
 ///////////////////////////////////////////////////////////////////////
@@ -48,18 +107,49 @@ public:
     typedef TImplements implements;
     typedef TExtends extends;
 
-    semaphoret(const semaphoret &copy) {
+    typedef typename extends::attached_t attached_t;
+    typedef typename extends::unattached_t unattached_t;
+    enum { unattached = extends::unattached };
+    
+    semaphoret(attached_t detached, bool is_created): extends(detached, is_created) {
+    }
+    semaphoret(attached_t detached): extends(detached) {
+    }
+    semaphoret(bool is_logged, bool is_err_logged): extends(is_logged, is_err_logged) {
+        IS_ERR_LOGGED_DEBUG("this->created()...");
+        if (!(this->created())) {
+            IS_ERR_LOGGED_ERROR("...failed on this->created() throw (create_exception(create_failed))...");
+            throw (create_exception(create_failed));
+        }
+    }
+    semaphoret(bool is_logged): extends(is_logged) {
+        IS_ERR_LOGGED_DEBUG("this->created()...");
+        if (!(this->created())) {
+            IS_ERR_LOGGED_ERROR("...failed on this->created() throw (create_exception(create_failed))...");
+            throw (create_exception(create_failed));
+        }
+    }
+    semaphoret(const semaphoret &copy): extends(copy) {
     }
     semaphoret() {
+        IS_ERR_LOGGED_DEBUG("this->created()...");
+        if (!(this->created())) {
+            IS_ERR_LOGGED_ERROR("...failed on this->created() throw (create_exception(create_failed))...");
+            throw (create_exception(create_failed));
+        }
     }
     virtual ~semaphoret() {
+        IS_ERR_LOGGED_DEBUG("this->destroyed()...");
+        if (!(this->destroyed())) {
+            IS_ERR_LOGGED_ERROR("...failed on this->destroyed() throw (create_exception(destroy_failed))...");
+            throw (create_exception(destroy_failed));
+        }
     }
 };
 typedef semaphoret<> semaphore;
+} /// namespace derived
 
 } /// namespace mt
 } /// namespace xos
 
 #endif /// _XOS_MT_SEMAPHORE_HPP 
-        
-

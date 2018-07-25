@@ -13,18 +13,18 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: semaphore.cpp
+///   File: queue.cpp
 ///
 /// Author: $author$
-///   Date: 4/11/2018
+///   Date: 7/12/2018
 ///////////////////////////////////////////////////////////////////////
-#include "xos/mt/semaphore.hpp"
+#include "xos/mt/std/queue.hpp"
 
 namespace xos {
 namespace mt {
+namespace std {
 
+} /// namespace std
 } /// namespace mt
 } /// namespace xos
-
-        
 

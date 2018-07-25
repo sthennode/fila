@@ -85,10 +85,10 @@ public:
     mutext() {
     }
     virtual ~mutext() {
-        IF_ERR_LOGGED_DEBUG(this->is_logged(), this->is_err_logged(), "this->destroyed()...");
+        IS_ERR_LOGGED_DEBUG("this->destroyed()...");
         if (!(this->destroyed())) {
             const create_exception e(destroy_failed);
-            IF_ERR_LOGGED_ERROR(this->is_logged(), this->is_err_logged(), "...failed on this->destroyed() throw (const create_exception e(destroy_failed))...");
+            IS_ERR_LOGGED_ERROR("...failed on this->destroyed() throw (const create_exception e(destroy_failed))...");
             throw (e);
         }
     }
@@ -120,36 +120,36 @@ public:
     mutext(attached_t detached): extends(detached) {
     }
     mutext(bool is_logged, bool is_err_logged): extends(is_logged, is_err_logged) {
-        IF_ERR_LOGGED_DEBUG(this->is_logged(), this->is_err_logged(), "this->created()...");
+        IS_ERR_LOGGED_DEBUG("this->created()...");
         if (!(this->created())) {
             const create_exception e(create_failed);
-            IF_ERR_LOGGED_ERROR(this->is_logged(), this->is_err_logged(), "...failed on this->created() throw (const create_exception e(create_failed))...");
+            IS_ERR_LOGGED_ERROR("...failed on this->created() throw (const create_exception e(create_failed))...");
             throw (e);
         }
     }
     mutext(bool is_logged): extends(is_logged) {
-        IF_ERR_LOGGED_DEBUG(this->is_logged(), this->is_err_logged(), "this->created()...");
+        IS_ERR_LOGGED_DEBUG("this->created()...");
         if (!(this->created())) {
             const create_exception e(create_failed);
-            IF_ERR_LOGGED_ERROR(this->is_logged(), this->is_err_logged(), "...failed on this->created() throw (const create_exception e(create_failed))...");
+            IS_ERR_LOGGED_ERROR("...failed on this->created() throw (const create_exception e(create_failed))...");
             throw (e);
         }
     }
     mutext(const mutext &copy): extends(copy) {
     }
     mutext() {
-        IF_ERR_LOGGED_DEBUG(this->is_logged(), this->is_err_logged(), "this->created()...");
+        IS_ERR_LOGGED_DEBUG("this->created()...");
         if (!(this->created())) {
             const create_exception e(create_failed);
-            IF_ERR_LOGGED_ERROR(this->is_logged(), this->is_err_logged(), "...failed on this->created() throw (const create_exception e(create_failed))...");
+            IS_ERR_LOGGED_ERROR("...failed on this->created() throw (const create_exception e(create_failed))...");
             throw (e);
         }
     }
     virtual ~mutext() {
-        IF_ERR_LOGGED_DEBUG(this->is_logged(), this->is_err_logged(), "this->destroyed()...");
+        IS_ERR_LOGGED_DEBUG("this->destroyed()...");
         if (!(this->destroyed())) {
             const create_exception e(destroy_failed);
-            IF_ERR_LOGGED_ERROR(this->is_logged(), this->is_err_logged(), "...failed on this->destroyed() throw (const create_exception e(destroy_failed))...");
+            IS_ERR_LOGGED_ERROR("...failed on this->destroyed() throw (const create_exception e(destroy_failed))...");
             throw (e);
         }
     }

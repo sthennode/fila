@@ -21,7 +21,6 @@
 #ifndef _XOS_MT_OS_MUTEX_HPP
 #define _XOS_MT_OS_MUTEX_HPP
 
-#include "xos/mt/mutex.hpp"
 #include "xos/mt/os/os.hpp"
 
 #if defined(WINDOWS)
