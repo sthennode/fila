@@ -61,6 +61,7 @@ $${FILA_SRC}/xos/mt/os/os.hpp \
 $${FILA_SRC}/xos/mt/mutex.hpp \
 $${FILA_SRC}/xos/mt/posix/mutex.hpp \
 $${FILA_SRC}/xos/console/main_main.hpp \
+$${FILA_SRC}/xos/app/console/fila/main.hpp \
 
 # fila_exe SOURCES
 #
@@ -72,6 +73,7 @@ $${NADIR_SRC}/xos/base/waited.cpp \
 $${FILA_SRC}/xos/mt/os/os.cpp \
 $${FILA_SRC}/xos/mt/posix/mutex.cpp \
 $${FILA_SRC}/xos/console/main_main.cpp \
+$${FILA_SRC}/xos/app/console/fila/main.cpp \
 
 ########################################################################
 # fila_exe FRAMEWORKS
