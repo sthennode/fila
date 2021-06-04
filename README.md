@@ -1,2 +1,2 @@
 # fila
-fila -- threads
+fila -- a threadlike structure
