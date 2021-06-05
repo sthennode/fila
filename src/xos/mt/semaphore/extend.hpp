@@ -16,16 +16,16 @@
 //   File: extend.hpp
 //
 // Author: $author$
-//   Date: 8/9/2018
+//   Date: 8/16/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_MT_MUTEX_EXTEND_HPP
-#define _XOS_MT_MUTEX_EXTEND_HPP
+#ifndef _XOS_MT_SEMAPHORE_EXTEND_HPP
+#define _XOS_MT_SEMAPHORE_EXTEND_HPP
 
-#include "xos/mt/mutex/implement.hpp"
+#include "xos/mt/semaphore/implement.hpp"
 
 namespace xos {
 namespace mt {
-namespace mutex {
+namespace semaphore {
 
 ///////////////////////////////////////////////////////////////////////
 //  Class: extendt
@@ -35,7 +35,7 @@ template
  typename Tunattached = int, Tunattached Vunattached = 0,
  class Textends = createdt
  <Tattached, Tunattached, Vunattached, 
-  mutex::implement, logged_extendt<mutex::implement> > >
+  semaphore::implement, logged_extendt<semaphore::implement> > >
 
 class _EXPORT_CLASS extendt: public Textends {
 public:
@@ -67,10 +67,10 @@ public:
 typedef extendt<> extend;
 
 ///////////////////////////////////////////////////////////////////////
-//  Class: unlockedt
+//  Class: releasedt
 ///////////////////////////////////////////////////////////////////////
-template <class Textends = mutex::extend>
-class _EXPORT_CLASS unlockedt: public Textends {
+template <class Textends = semaphore::extend>
+class _EXPORT_CLASS releasedt: public Textends {
 public:
     typedef Textends extends;
 
@@ -78,42 +78,42 @@ public:
     typedef typename extends::unattached_t unattached_t;
     enum { unattached = extends::unattached };
 
-    unlockedt(attached_t detached, bool is_created): extends(detached, is_created) {
+    releasedt(attached_t detached, bool is_created): extends(detached, is_created) {
     }
-    unlockedt(attached_t detached): extends(detached) {
+    releasedt(attached_t detached): extends(detached) {
     }
-    unlockedt(const unlockedt& copy): extends(copy) {
+    releasedt(const releasedt& copy): extends(copy) {
     }
-    unlockedt(bool is_logged, bool is_err_logged): extends(is_logged, is_err_logged) {
+    releasedt(bool is_logged, bool is_err_logged): extends(is_logged, is_err_logged) {
     }
-    unlockedt(bool is_logged): extends(is_logged) {
+    releasedt(bool is_logged): extends(is_logged) {
     }
-    unlockedt() {
+    releasedt() {
     }
-    virtual ~unlockedt() {
+    virtual ~releasedt() {
     }
 
-    virtual bool lock() { 
+    virtual bool acquire() { 
         return true; 
     }
-    virtual lock_status try_lock() { 
-        return lock_success; 
-    }
-    virtual lock_status untimed_lock() { 
-        return lock_success; 
-    }
-    virtual lock_status timed_lock(mseconds_t milliseconds) { 
-        return lock_success; 
-    }
-    virtual bool unlock() { 
+    virtual bool realease() { 
         return true; 
     }
-}; // class _EXPORT_CLASS unlockedt
+    virtual acquire_status try_acquire() { 
+        return acquire_success; 
+    }
+    virtual acquire_status untimed_acquire() { 
+        return acquire_success; 
+    }
+    virtual acquire_status timed_acquire(mseconds_t milliseconds) { 
+        return acquire_success; 
+    }
+}; // class _EXPORT_CLASS releasedt
 
-typedef unlockedt<> unlocked;
+typedef releasedt<> released;
 
-} // namespace mutex
+} // namespace semaphore
 } // namespace mt
 } // namespace xos
 
-#endif // _XOS_MT_MUTEX_EXTEND_HPP 
+#endif // _XOS_MT_SEMAPHORE_EXTEND_HPP 
